@@ -1,6 +1,6 @@
-# 🚚 SA-LOGÍSTICA
+# 💵 SA-LOGÍSTICA
 
-Sistema de Planejamento e Monitoramento de Entregas.
+Finanças pessoais
 
 ---
 
@@ -15,21 +15,19 @@ Sistema de Planejamento e Monitoramento de Entregas.
 ---
 
 ## 🌍 Área de Atuação
-Logística e Entregas.
+Finanças pessoais
 
 ---
 
 ## ⚠️ Problema
-Atraso nas entregas e falta de planejamento de rotas.
+Falta de controle e organização das finanças pessoais. 
 
 ---
 
 ## 💡 Solução
-Sistema de Planejamento e Monitoramento de Entregas:
+Sistema de controle financeiro:
 
-- Organização de pedidos  
-- Definição automática de rotas  
-- Monitoramento em tempo real das entregas  
-- Controle e Gerenciamento de Estoque
+- O sistema de finanças pessoais resolve o problema da falta de controle financeiro, ajudando usuários a organizar receitas, despesas, metas e contas, permitindo um melhor planejamento e evitando gastos desnecessários. 
+
 
 ---
