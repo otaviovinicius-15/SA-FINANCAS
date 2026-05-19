@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Gestão 360</title>
+</head>
+<body>
+
+    <!--Título do form-->
+    <div class="auth-wrapper">
+        <aside class="auth-sidebar">
+            <div class="login-title">
+                <h2>Gestão 360</h2>
+                <p>Sua plataforma de gestão financeira pessoal</p>
+            </div>
+        </aside>
+
+        <!--Formulário de login-->
+        <main class="login-card">
+            <div class="login-auth">
+                <form id="login-form" method="POST" action="">
+
+                    <div class="login-group">
+                        <label for="email">E-mail</label><br>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            placeholder="E-mail" 
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="login-group">
+                        <label for="password">Senha</label><br>
+                        <input 
+                            type="password" 
+                            id="senha" 
+                            placeholder="************" 
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <!--Botão entrar-->
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </main>
+
+        <!--Rodapé-->
+        <p>Não tem uma conta ? <a href="cadastro.html">Registre-se</a></p>
+    </div>
+</body>
+</html>

@@ -3,49 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/cadastro.css">
     <title>Gestão 360</title>
 </head>
 <body>
 
+    <!--Título do form-->
     <div class="auth-wrapper">
         <aside class="auth-sidebar">
-            <div class="auth-sidebar-content">
+            <div class="register-title">
                 <h2>Crie sua conta</h2>
                 <p>Junte-se a plataforma e controle seus gastos</p>
             </div>
         </aside>
 
-        <main class="auth-main">
-            <div class="auth-card">
-                <h2>Formulário de Cadastro</h2>
-                <p>Preencha os campos para começar</p>
-
-                <form id="register-form" mathod="POST" action="">
+        <!--Formulário de cadastro-->
+        <main class="register-card">
+            <div class="register-auth">
+                <form id="register-form" method="POST" action="">
 
                     <div class="register-group">
-                        <label for="name">Nome</label>
+                        <label for="name">Nome</label><br>
                         <input 
-                        type="text" 
-                        id="nome" 
-                        placeholder="Nome Completo" 
-                        required
+                            type="text" 
+                            id="nome" 
+                            placeholder="Nome Completo" 
+                            required
                         >
                     </div>
 
                     <div class="register-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" placeholder="E-mail" required>
+                        <label for="email">E-mail</label><br>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            placeholder="E-mail" 
+                            autocomplete="email"
+                            required
+                        >
                     </div>
 
                     <div class="register-group">
-                        <label for="password">Senha</label>
-                        <input type="password" id="senha" placeholder="************" required>
+                        <label for="telefone">Telefone</label><br>
+                        <input 
+                            type="tel" 
+                            id="telefone" 
+                            name="telefone"
+                            placeholder="(51) 99999-9999" 
+                            pattern="\(\d{2}\)\s\d{5}-\d{4}"
+                            autocomplete="tel"
+                            required
+                        >
                     </div>
+
+                    <div class="register-group">
+                        <label for="password">Senha</label><br>
+                        <input 
+                            type="password" 
+                            id="senha" 
+                            placeholder="************" 
+                            autocomplete="new-password"
+                            required
+                        >
+                    </div>
+
+                    <!--Botão entrar-->
+                    <button type="submit">Entrar</button>
                 </form>
             </div>
         </main>
 
+        <!--Rodapé-->
+        <p>Já possui uma conta ? <a href="login.html">Fazer Login</a></p>
     </div>
-
 </body>
 </html>
