@@ -8,7 +8,7 @@
 $servidor = "localhost";
 $usuario  = "root";
 $senha    = "";
-$banco    = "";
+$banco    = "controle_financeiro";
 
 // Criar a conexão usando mysqli
 $conexao = mysqli_connect($servidor, $usuario, $senha, $banco);

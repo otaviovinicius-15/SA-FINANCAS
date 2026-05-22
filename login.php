@@ -1,3 +1,9 @@
+<?php
+
+require_once "conexao.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -52,7 +58,7 @@
         </main>
 
         <!--Rodapé-->
-        <p>Não tem uma conta ? <a href="cadastro.html">Registre-se</a></p>
+        <p>Não tem uma conta ? <a href="cadastro.php">Registre-se</a></p>
     </div>
 </body>
 </html>

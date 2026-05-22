@@ -1,3 +1,9 @@
+<?php
+
+require_once "conexao.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -76,7 +82,7 @@
         </main>
 
         <!--Rodapé-->
-        <p>Já possui uma conta ? <a href="login.html">Fazer Login</a></p>
+        <p>Já possui uma conta ? <a href="login.php">Fazer Login</a></p>
     </div>
 </body>
 </html>
