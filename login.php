@@ -1,7 +1,45 @@
 <?php
 
-require_once "conexao.php";
+//conexão com o banco de dados
+require_once('conexao.php');
 
+//alerta
+$mensagem = "";
+
+//verifica se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $email = $_POST['email'];
+    $senha = $_POST['password'];
+
+    $stmt = $conexao->prepare("SELECT id_usuario, nome, senha FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+
+    //verifica se o email existe
+    if ($resultado->num_rows > 0) {
+
+        $usuario = $resultado->fetch_assoc();
+
+        //verifica a senha
+        if (password_verify($senha, $usuario['senha'])) {
+
+            $_SESSION['usuario_id'] = $usuario['id_usuario'];
+            $_SESSION['usuario_nome'] = $usuario['nome'];
+
+            header("Location: dashboard.php");
+            exit();
+
+        } else {
+            $mensagem = "Senha incorreta !";
+        }
+
+    } else {
+        $mensagem = "E-mail não cadastrado !";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +82,8 @@ require_once "conexao.php";
                         <label for="password">Senha</label><br>
                         <input 
                             type="password" 
-                            id="senha" 
+                            id="password" 
+                            name="password"
                             placeholder="************" 
                             autocomplete="current-password"
                             required
@@ -61,4 +100,13 @@ require_once "conexao.php";
         <p>Não tem uma conta ? <a href="cadastro.php">Registre-se</a></p>
     </div>
 </body>
+
+<!--mensagem de erro-->
+<?php if (!empty($mensagem)) : ?>
+
+<script>
+    alert("<?php echo $mensagem; ?>");
+</script>
+
+<?php endif; ?>
 </html>
