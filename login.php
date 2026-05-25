@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 //conexão com o banco de dados
 require_once('conexao.php');
@@ -29,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['usuario_id'] = $usuario['id_usuario'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
 
-            header("Location: dashboard.php");
+            header("Location: financas/dashboard.php");
             exit();
 
         } else {

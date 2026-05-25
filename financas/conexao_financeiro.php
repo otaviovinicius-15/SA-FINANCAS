@@ -7,7 +7,7 @@
 $servidor = "localhost";
 $usuario  = "root";
 $senha    = "";
-banco    = "controle_financeiro";
+$banco    = "controle_financeiro";
 
 $conexao = mysqli_connect($servidor, $usuario, $senha, $banco);
 

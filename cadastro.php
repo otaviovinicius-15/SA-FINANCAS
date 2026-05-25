@@ -13,13 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha  = $_POST["password"];
 
     // valida email
-    $verifica = mysqli_query(
-        $conexao,
-        "SELECT * FROM USUARIOS WHERE EMAIL = '$email'"
-    );
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario FROM usuarios WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
 
     // verifica se email está cadastrado
-    if (mysqli_num_rows($verifica) > 0) {
+    if (mysqli_stmt_num_rows($stmt) > 0) {
 
         $mensagem = "E-mail já está cadastrado!";
 
@@ -29,15 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
         // insere usuário no banco
-        $sql = "INSERT INTO USUARIOS
-        (NOME, EMAIL, TELEFONE, SENHA)
-
-        VALUES
-
-        ('$nome', '$email', '$tel', '$senhaHash')";
+        $stmt = mysqli_prepare($conexao, "INSERT INTO usuarios (nome, email, telefone, senha) VALUES (?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "ssss", $nome, $email, $tel, $senhaHash);
 
         // verifica cadastro
-        if (mysqli_query($conexao, $sql)) {
+        if (mysqli_stmt_execute($stmt)) {
 
             header("Location: login.php");
             exit();

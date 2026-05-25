@@ -30,24 +30,45 @@ if (isset($_GET["excluir"])) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = intval($_POST["id"] ?? 0);
-    $descricao = mysqli_real_escape_string($conexao, $_POST["descricao"]);
-    $valor = str_replace([','], ['.'], $_POST["valor"]);
-    $data_movimento = $_POST["data_movimento"];
-    $tipo = $_POST["tipo"];
-    $categoria_id = intval($_POST["categoria_id"]);
+    $descricao = trim($_POST["descricao"] ?? '');
+    $valor = str_replace(',', '.', $_POST["valor"] ?? '');
+    $data_movimento = $_POST["data_movimento"] ?? '';
+    $tipo = $_POST["tipo"] ?? '';
+    $categoria_id = intval($_POST["categoria_id"] ?? 0);
 
     if (empty($descricao) || empty($valor) || empty($data_movimento) || empty($tipo)) {
         $erro = "Preencha todos os campos obrigatórios.";
+    } elseif (!is_numeric($valor) || floatval($valor) <= 0) {
+        $erro = "Informe um valor válido maior que zero.";
     } else {
+        $descricao = mysqli_real_escape_string($conexao, $descricao);
+        $valor = number_format((float)$valor, 2, '.', '');
+
+        if ($categoria_id <= 0) {
+            $categoria_id = null;
+        }
+
         if ($id > 0) {
-            $sql = "UPDATE movimentacoes SET descricao = '$descricao', valor = '$valor', data_movimento = '$data_movimento', tipo = '$tipo', categoria_id = $categoria_id WHERE id_movimento = $id AND usuario_id = $usuario_id";
+            if ($categoria_id === null) {
+                $stmt = mysqli_prepare($conexao, "UPDATE movimentacoes SET descricao = ?, valor = ?, data_movimento = ?, tipo = ?, categoria_id = NULL WHERE id_movimento = ? AND usuario_id = ?");
+                mysqli_stmt_bind_param($stmt, "sdssii", $descricao, $valor, $data_movimento, $tipo, $id, $usuario_id);
+            } else {
+                $stmt = mysqli_prepare($conexao, "UPDATE movimentacoes SET descricao = ?, valor = ?, data_movimento = ?, tipo = ?, categoria_id = ? WHERE id_movimento = ? AND usuario_id = ?");
+                mysqli_stmt_bind_param($stmt, "sdssiii", $descricao, $valor, $data_movimento, $tipo, $categoria_id, $id, $usuario_id);
+            }
             $sucesso = "Movimentação atualizada com sucesso!";
         } else {
-            $sql = "INSERT INTO movimentacoes (descricao, valor, data_movimento, tipo, categoria_id, usuario_id) VALUES ('$descricao', '$valor', '$data_movimento', '$tipo', $categoria_id, $usuario_id)";
+            if ($categoria_id === null) {
+                $stmt = mysqli_prepare($conexao, "INSERT INTO movimentacoes (descricao, valor, data_movimento, tipo, categoria_id, usuario_id) VALUES (?, ?, ?, ?, NULL, ?)");
+                mysqli_stmt_bind_param($stmt, "sdssi", $descricao, $valor, $data_movimento, $tipo, $usuario_id);
+            } else {
+                $stmt = mysqli_prepare($conexao, "INSERT INTO movimentacoes (descricao, valor, data_movimento, tipo, categoria_id, usuario_id) VALUES (?, ?, ?, ?, ?, ?)");
+                mysqli_stmt_bind_param($stmt, "sdssii", $descricao, $valor, $data_movimento, $tipo, $categoria_id, $usuario_id);
+            }
             $sucesso = "Movimentação cadastrada com sucesso!";
         }
 
-        if (!mysqli_query($conexao, $sql)) {
+        if (!$stmt || !mysqli_stmt_execute($stmt)) {
             $erro = "Erro ao salvar movimentação.";
             $sucesso = "";
         } else {
