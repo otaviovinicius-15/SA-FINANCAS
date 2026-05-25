@@ -2,6 +2,53 @@
 
 require_once "conexao.php";
 
+$mensagem = '';
+
+// verifica se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $nome   = $_POST["name"];
+    $email  = $_POST["email"];
+    $tel    = $_POST["telefone"];
+    $senha  = $_POST["password"];
+
+    // valida email
+    $verifica = mysqli_query(
+        $conexao,
+        "SELECT * FROM USUARIOS WHERE EMAIL = '$email'"
+    );
+
+    // verifica se email está cadastrado
+    if (mysqli_num_rows($verifica) > 0) {
+
+        $mensagem = "E-mail já está cadastrado!";
+
+    } else {
+
+        // criptografa senha
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+        // insere usuário no banco
+        $sql = "INSERT INTO USUARIOS
+        (NOME, EMAIL, TELEFONE, SENHA)
+
+        VALUES
+
+        ('$nome', '$email', '$tel', '$senhaHash')";
+
+        // verifica cadastro
+        if (mysqli_query($conexao, $sql)) {
+
+            header("Location: login.php");
+            exit();
+
+        } else {
+
+            $mensagem = "Erro ao cadastrar!";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +105,6 @@ require_once "conexao.php";
                             id="telefone" 
                             name="telefone"
                             placeholder="(51) 99999-9999" 
-                            pattern="\(\d{2}\)\s\d{5}-\d{4}"
                             autocomplete="tel"
                             required
                         >
@@ -69,6 +115,7 @@ require_once "conexao.php";
                         <input 
                             type="password" 
                             id="password" 
+                            name="password"
                             placeholder="************" 
                             autocomplete="new-password"
                             required
@@ -85,4 +132,13 @@ require_once "conexao.php";
         <p>Já possui uma conta ? <a href="login.php">Fazer Login</a></p>
     </div>
 </body>
+
+<!--mensagem de erro-->
+<?php if (!empty($mensagem)) : ?>
+
+<script>
+    alert("<?php echo $mensagem; ?>");
+</script>
+
+<?php endif; ?>
 </html>
