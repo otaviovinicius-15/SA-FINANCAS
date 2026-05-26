@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha  = $_POST["password"];
 
     // valida email
-    $stmt = mysqli_prepare($conexao, "SELECT id_usuario FROM USUARIOS WHERE EMAIL = ?");
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario FROM usuarios WHERE email = ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
         // insere usuário no banco
-        $stmt = mysqli_prepare($conexao, "INSERT INTO USUARIOS (NOME, EMAIL, TELEFONE, SENHA) VALUES (?, ?, ?, ?)");
+        $stmt = mysqli_prepare($conexao, "INSERT INTO usuarios (nome, email, telefone, senha) VALUES (?, ?, ?, ?)");
         mysqli_stmt_bind_param($stmt, "ssss", $nome, $email, $tel, $senhaHash);
 
         // verifica cadastro
