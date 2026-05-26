@@ -1,0 +1,49 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Definir versão (timestamp)
+        id: version
+        run: echo "VERSION=v$(date +'%Y.%m.%d.%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Criar lista de exclusão
+        run: |
+          if [ -f CI/auto_release_ignore.txt ]; then
+            echo "Usando release_ignore.txt"
+            cat CI/auto_release_ignore.txt
+          else
+            echo "Arquivo release_ignore.txt não encontrado"
+          fi
+
+      - name: Criar arquivo compactado
+        run: |
+          mkdir build
+
+          if [ -f CI/auto_release_ignore.txt ]; then
+            zip -r build/calc_exp.zip . -x@CI/auto_release_ignore.txt
+          else
+            zip -r build/calc_exp.zip .
+          fi
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+          files: build/calc_exp.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
