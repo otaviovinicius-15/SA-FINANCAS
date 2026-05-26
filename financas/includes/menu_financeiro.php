@@ -16,6 +16,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <a href="categorias.php" class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-gray-800 hover:text-white <?= $currentPage === 'categorias.php' ? 'bg-gray-800 text-white' : 'text-gray-300' ?>">
             🏷️ Categorias
         </a>
+        <a href="metas.php" class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-gray-800 hover:text-white <?= $currentPage === 'metas.php' ? 'bg-gray-800 text-white' : 'text-gray-300' ?>">
+            🎯 Metas
+        </a>
+        <a href="perfil.php" class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-gray-800 hover:text-white <?= $currentPage === 'perfil.php' ? 'bg-gray-800 text-white' : 'text-gray-300' ?>">
+            👤 Meu Perfil
+        </a>
         <a href="logout.php" class="block rounded-lg px-4 py-3 text-sm font-medium text-red-300 hover:bg-red-500/10 hover:text-red-100">
             🚪 Sair
         </a>
