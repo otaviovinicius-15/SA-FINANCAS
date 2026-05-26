@@ -15,7 +15,7 @@ jobs:
           echo "Base: ${{ github.base_ref }}"
           echo "Head: ${{ github.head_ref }}"
 
-          if [ "${{ github.head_ref }}" != "dev" ]; then
-            echo "❌ Apenas PRs da branch 'dev' são permitidos para a main"
+          if [ "${{ github.head_ref }}" != "dev" ] && [ "${{ github.head_ref }}" != "DEV" ]; then
+            echo "❌ Apenas PRs das branches 'dev' ou 'DEV' são permitidos para a main"
             exit 1
           fi
